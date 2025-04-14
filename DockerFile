@@ -1,0 +1,24 @@
+FROM pytorch/pytorch:2.6.0-cuda12.4-cudnn9-runtime
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y ffmpeg git
+
+RUN pip install transformers==4.49.0
+# Install Python dependencieszz
+RUN pip install datasets librosa soundfile scipy fastapi uvicorn python-multipart
+
+# Set up working directory
+WORKDIR /
+
+RUN pip install --no-cache-dir runpod
+# Copy the application code to the working directory
+COPY rp_handler.py /
+
+# # Pre-download the model (optional but speeds up cold starts)
+# RUN python -c "from transformers import WhisperProcessor, WhisperForConditionalGeneration; \
+#     processor = WhisperProcessor.from_pretrained('Lingua-Connect/whisper-small-sw-bible'); \
+#     model = WhisperForConditionalGeneration.from_pretrained('Lingua-Connect/whisper-small-sw-bible')"
+
+EXPOSE 8000
+
+CMD ["python3", "-u", "rp_handler.py"]
