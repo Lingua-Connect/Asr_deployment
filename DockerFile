@@ -4,7 +4,7 @@ FROM pytorch/pytorch:2.6.0-cuda12.4-cudnn9-runtime
 RUN apt-get update && apt-get install -y ffmpeg git
 
 RUN pip install transformers==4.49.0
-# Install Python dependencieszz
+# Install Python dependencies
 RUN pip install datasets librosa soundfile scipy fastapi uvicorn python-multipart
 
 # Set up working directory
