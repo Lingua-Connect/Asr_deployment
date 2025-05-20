@@ -9,8 +9,9 @@ import runpod
 
 # Load model globally for reuse across invocations
 MODEL_ID = "Lingua-Connect/whisper-small-sw-bible"
-processor = WhisperProcessor.from_pretrained(MODEL_ID)
-model = WhisperForConditionalGeneration.from_pretrained(MODEL_ID)
+REVISION = "wandb-gir"
+processor = WhisperProcessor.from_pretrained(MODEL_ID, revision=REVISION)
+model = WhisperForConditionalGeneration.from_pretrained(MODEL_ID, revision=REVISION)
 model.to("cuda" if torch.cuda.is_available() else "cpu")
 
 def handler(event):
